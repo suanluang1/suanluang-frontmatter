@@ -1,8 +1,8 @@
 ---
-title: Suanluang Rama IX
-subtitle: Botanic Garden
-description: Thailand's Largest Botanical Garden
-buttonText: Explore Gardens
+title: Suanluang Rama IX The Royal Garden
+subtitle: Botanical Garden
+description: Thailand's Botanical Garden
+buttonText: Explore
 buttonLink: "#about"
 draft: false
 type: page
