@@ -1,0 +1,67 @@
+---
+title: Suanluang Rama IX
+subtitle: Botanical Garden
+description: Thailand's largest botanical garden
+buttonText: Explore
+---
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .hero { text-align: center; padding: 100px 20px; background-color: #2c3e50; color: white; }
+    .button { display: inline-block; padding: 10px 20px; background-color: #27ae60; color: white; text-decoration: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>{{ title }}</h1>
+    <p>{{ subtitle }}</p>
+    <a href="#about" class="button">{{ buttonText }}</a>
+  </div>
+  
+  <p>{{ description }}</p>
+
+  <script>
+    // Process frontmatter template variables
+    function processFrontmatter() {
+      // Extract frontmatter
+      const content = document.documentElement.innerHTML;
+      const frontmatterRegex = /---\s+([\s\S]*?)\s+---/;
+      const match = content.match(frontmatterRegex);
+      
+      if (match && match[1]) {
+        // Parse frontmatter
+        const frontmatter = {};
+        const lines = match[1].split('\n');
+        
+        lines.forEach(line => {
+          if (line.includes(':')) {
+            const parts = line.split(':');
+            const key = parts[0].trim();
+            const value = parts.slice(1).join(':').trim();
+            if (key && value) {
+              frontmatter[key] = value.replace(/^['"]|['"]$/g, '');
+            }
+          }
+        });
+        
+        // Replace template variables
+        Object.keys(frontmatter).forEach(key => {
+          const regex = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
+          document.body.innerHTML = document.body.innerHTML.replace(regex, frontmatter[key]);
+        });
+        
+        // Remove frontmatter from display
+        document.body.innerHTML = document.body.innerHTML.replace(/---\s+[\s\S]*?\s+---/, '');
+      }
+    }
+    
+    // Run when the page loads
+    window.addEventListener('DOMContentLoaded', processFrontmatter);
+  </script>
+</body>
+</html>
